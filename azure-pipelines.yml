@@ -10,14 +10,15 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- task: Gradle@2
+- task: Gradle@3
   inputs:
-    workingDirectory: ''
     gradleWrapperFile: 'gradlew'
-    gradleOptions: '-Xmx3072m'
+    tasks: 'build'
+    publishJUnitResults: true
+    testResultsFiles: '**/TEST-*.gradle'
     javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '1.8'
-    testResultsFiles: '**/surefire-reports/TEST-*.gradle'
+    sonarQubeRunAnalysis: false
+    spotBugsAnalysis: false
 - task: CopyFiles@2
   inputs:
     SourceFolder: '$(Pipeline.Workspace)/s/target/'
